@@ -40,6 +40,30 @@ const PARTICLES = Array.from({ length: 32 }, (_, i) => ({
   type: ['leaf', 'star', 'dot', 'ring'][i % 4],
 }))
 
+const THEME_CARDS = [
+  {
+    icon: '👗',
+    title: 'Dress code',
+    desc: 'Colores tierra, verde y crema. ¡Ven cómodo y lindo para la ocasión!',
+  },
+  {
+    icon: '🎂',
+    title: 'Habrá',
+    desc: 'Pastel temático, bocadillos, bebidas y muchas sorpresas preparadas con amor.',
+  },
+  {
+    icon: '📸',
+    title: 'Foto recuerdo',
+    desc: 'Tendremos photobooth. Prepara tu mejor pose para el álbum de Thiago.',
+  },
+]
+
+const RSVP_BADGES = [
+  '🎁 Regalos bienvenidos con amor',
+  '🧒 Niños bienvenidos',
+  '🍽️ Comida y bebidas incluidas',
+]
+
 function useCountdown(target) {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   useEffect(() => {
@@ -60,15 +84,15 @@ function useCountdown(target) {
   return time
 }
 
-function Reveal({ children, delay = 0, y = 50 }) {
+function Reveal({ children, delay = 0, y = 40 }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: true, margin: '-50px' })
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -97,7 +121,6 @@ export default function App() {
 
   return (
     <div className={styles.root}>
-      {/* Floating background particles */}
       <div className={styles.particlesBg} aria-hidden="true">
         {PARTICLES.map((p) => (
           <span
@@ -114,7 +137,6 @@ export default function App() {
         ))}
       </div>
 
-      {/* Animated mesh gradient orbs */}
       <motion.div
         className={styles.orb1}
         animate={{ scale: [1, 1.18, 1], x: [0, 45, 0], y: [0, -35, 0] }}
@@ -181,7 +203,6 @@ export default function App() {
               </motion.button>
             </motion.div>
 
-            {/* Gate decorative animals */}
             <div className={styles.gateAnimals} aria-hidden="true">
               {GATE_ANIMALS.map((emoji, i) => (
                 <motion.div
@@ -206,7 +227,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* ── MAIN INVITATION ── */}
+      {/* ── MAIN ── */}
       <AnimatePresence>
         {entered && (
           <motion.div
@@ -218,19 +239,11 @@ export default function App() {
 
             {/* ─ HERO ─ */}
             <section className={styles.hero}>
-              {/* Sparkle decorations */}
               {SPARKLES.map((s, i) => (
                 <span
                   key={i}
                   className={styles.sparkle}
-                  style={{
-                    top: s.top,
-                    left: s.left,
-                    right: s.right,
-                    width: s.size,
-                    height: s.size,
-                    animationDelay: `${s.delay}s`,
-                  }}
+                  style={{ top: s.top, left: s.left, right: s.right, width: s.size, height: s.size, animationDelay: `${s.delay}s` }}
                   aria-hidden="true"
                 />
               ))}
@@ -247,7 +260,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.9 }}
                 >
-                  Baby Shower
+                  Baby Shower · Sábado 11 de Julio
                 </motion.div>
                 <h1 className={styles.heroName}>Thiago</h1>
                 <motion.p
@@ -256,12 +269,11 @@ export default function App() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6, duration: 1 }}
                 >
-                  Estamos muy felices de compartir contigo<br />
-                  la llegada de nuestro mayor tesoro.
+                  Estamos esperando a nuestro mayor tesoro y queremos<br />
+                  que formes parte de este momento tan especial.
                 </motion.p>
               </motion.div>
 
-              {/* Animals grid */}
               <div className={styles.animalsGrid}>
                 {ANIMALS.map((a, i) => (
                   <motion.div
@@ -269,19 +281,11 @@ export default function App() {
                     className={styles.animalCard}
                     initial={{ opacity: 0, scale: 0.3, rotate: -20 }}
                     animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                    transition={{
-                      delay: 0.35 + i * 0.08,
-                      type: 'spring',
-                      stiffness: 240,
-                      damping: 15,
-                    }}
+                    transition={{ delay: 0.35 + i * 0.08, type: 'spring', stiffness: 240, damping: 15 }}
                     whileHover={{ y: -10, scale: 1.12, rotate: i % 2 === 0 ? 6 : -6 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <span
-                      className={styles.animalEmoji}
-                      style={{ animationDelay: `${i * 0.35}s` }}
-                    >
+                    <span className={styles.animalEmoji} style={{ animationDelay: `${i * 0.35}s` }}>
                       {a.emoji}
                     </span>
                     <span className={styles.animalName}>{a.name}</span>
@@ -298,12 +302,29 @@ export default function App() {
                 <motion.span
                   animate={{ y: [0, 7, 0] }}
                   transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-                >
-                  ↓
-                </motion.span>
+                >↓</motion.span>
                 <span>Desliza para ver los detalles</span>
               </motion.div>
             </section>
+
+            {/* ─ QUOTE ─ */}
+            <Reveal delay={0.05}>
+              <section className={styles.quoteSection}>
+                <motion.div
+                  className={styles.quoteCard}
+                  whileHover={{ y: -4 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                >
+                  <div className={styles.quoteDecoTop}>❝</div>
+                  <p className={styles.quoteText}>
+                    Llega alguien tan pequeño que cabrá en nuestras manos,
+                    pero tan grande que llenará completamente nuestros corazones.
+                  </p>
+                  <div className={styles.quoteDecoBtm}>Con todo el amor,</div>
+                  <div className={styles.quoteAuthor}>Mamá y Papá 💚</div>
+                </motion.div>
+              </section>
+            </Reveal>
 
             {/* ─ COUNTDOWN ─ */}
             <Reveal>
@@ -347,8 +368,39 @@ export default function App() {
               </section>
             </Reveal>
 
+            {/* ─ THEME ─ */}
+            <Reveal delay={0.05}>
+              <section className={styles.section}>
+                <div className={styles.sectionLabel}>🌿 Tema de la fiesta</div>
+                <h2 className={styles.sectionTitle}>Animalitos del Bosque</h2>
+                <div className={styles.themeGrid}>
+                  {THEME_CARDS.map(({ icon, title, desc }, i) => (
+                    <motion.div
+                      key={title}
+                      className={styles.themeCard}
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ y: -6, scale: 1.02 }}
+                    >
+                      <motion.div
+                        className={styles.themeCardIcon}
+                        animate={{ rotate: [0, 8, -8, 0] }}
+                        transition={{ duration: 3 + i, repeat: Infinity, ease: 'easeInOut', delay: i * 0.8 }}
+                      >
+                        {icon}
+                      </motion.div>
+                      <div className={styles.themeCardTitle}>{title}</div>
+                      <div className={styles.themeCardDesc}>{desc}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+            </Reveal>
+
             {/* ─ EVENT INFO ─ */}
-            <Reveal delay={0.1}>
+            <Reveal delay={0.05}>
               <section className={styles.section}>
                 <div className={styles.sectionLabel}>📋 Detalles del evento</div>
                 <h2 className={styles.sectionTitle}>¿Cuándo y dónde?</h2>
@@ -358,19 +410,25 @@ export default function App() {
                       icon: '📅',
                       label: 'Fecha',
                       value: 'Sábado, 11 de Julio · 2026',
-                      sub: 'Marca el día en tu calendario',
+                      sub: 'Anota este día tan especial en tu agenda',
                     },
                     {
                       icon: '🕒',
                       label: 'Hora',
                       value: '4:30 de la tarde',
-                      sub: 'Te esperamos puntual',
+                      sub: 'Las puertas abren desde las 4:00 pm — ¡no llegues tarde!',
                     },
                     {
                       icon: '📍',
                       label: 'Lugar',
                       value: 'Nuestro dulce hogar',
-                      sub: 'Te compartimos la ubicación abajo',
+                      sub: 'La dirección exacta la encuentras en el botón de Google Maps',
+                    },
+                    {
+                      icon: '⏱️',
+                      label: 'Duración',
+                      value: 'Aproximadamente 3 horas',
+                      sub: 'Tiempo suficiente para celebrar, reír y crear recuerdos',
                     },
                   ].map(({ icon, label, value, sub }, i) => (
                     <motion.div
@@ -379,7 +437,7 @@ export default function App() {
                       initial={{ opacity: 0, x: -40 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.14, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                       whileHover={{ x: 5, transition: { duration: 0.2 } }}
                     >
                       <motion.div
@@ -400,9 +458,44 @@ export default function App() {
               </section>
             </Reveal>
 
+            {/* ─ RSVP ─ */}
+            <Reveal delay={0.05}>
+              <section className={styles.section}>
+                <div className={styles.sectionLabel}>💌 Confirmación</div>
+                <h2 className={styles.sectionTitle}>¿Vendrás a celebrar?</h2>
+                <motion.div
+                  className={styles.rsvpCard}
+                  whileHover={{ y: -3 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <p className={styles.rsvpText}>
+                    Para preparar todo con el cariño que mereces, te pedimos confirmar
+                    tu asistencia antes del <strong>4 de julio de 2026</strong>.
+                    Escríbenos por WhatsApp o deja saber a los papás — cada persona cuenta mucho para nosotros. 💚
+                  </p>
+                  <div className={styles.rsvpBadges}>
+                    {RSVP_BADGES.map((b, i) => (
+                      <motion.span
+                        key={b}
+                        className={styles.rsvpBadge}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1, duration: 0.4 }}
+                      >
+                        {b}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              </section>
+            </Reveal>
+
             {/* ─ ACTIONS ─ */}
-            <Reveal delay={0.1}>
+            <Reveal delay={0.05}>
               <section className={`${styles.section} ${styles.actionsSection}`}>
+                <div className={styles.sectionLabel}>🗺️ Encuentra el lugar</div>
+                <h2 className={styles.sectionTitle}>Cómo llegar</h2>
                 <motion.a
                   href="https://maps.app.goo.gl/KjbMn9h8Q4rpLre67"
                   target="_blank"
@@ -414,20 +507,18 @@ export default function App() {
                 >
                   <span className={styles.ctaIcon}>📍</span>
                   <div className={styles.ctaText}>
-                    <span className={styles.ctaLabel}>Google Maps</span>
-                    <span className={styles.ctaMain}>Ver Ubicación</span>
+                    <span className={styles.ctaLabel}>Abrir en Google Maps</span>
+                    <span className={styles.ctaMain}>Ver Ubicación Exacta</span>
                   </div>
                   <motion.span
                     className={styles.ctaArrow}
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  >
-                    →
-                  </motion.span>
+                  >→</motion.span>
                 </motion.a>
 
                 <motion.a
-                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Thiago&dates=20260711T213000Z/20260712T013000Z&details=¡Te+esperamos+en+el+Baby+Shower+de+Thiago!"
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Thiago&dates=20260711T213000Z/20260712T013000Z&details=¡Te+esperamos+en+el+Baby+Shower+de+Thiago!+Sábado+11+de+julio+a+las+4:30+pm"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.ctaSecondary}
@@ -437,16 +528,14 @@ export default function App() {
                 >
                   <span className={styles.ctaIcon}>🗓️</span>
                   <div className={styles.ctaText}>
-                    <span className={styles.ctaLabel}>Calendario</span>
-                    <span className={styles.ctaMain}>Agendar Evento</span>
+                    <span className={styles.ctaLabel}>Agregar al calendario</span>
+                    <span className={styles.ctaMain}>Guardar la Fecha</span>
                   </div>
                   <motion.span
                     className={styles.ctaArrow}
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                  >
-                    →
-                  </motion.span>
+                  >→</motion.span>
                 </motion.a>
               </section>
             </Reveal>
@@ -468,17 +557,15 @@ export default function App() {
               >
                 <p className={styles.footerWith}>Con todo el amor del mundo,</p>
                 <p className={styles.footerSign}>Sus Papás</p>
+                <p className={styles.footerNote}>
+                  No pueden esperar a conocerte, Thiago 🌿
+                </p>
                 <div className={styles.footerLeaves}>
                   {['🌿', '🍃', '🌿'].map((leaf, i) => (
                     <motion.span
                       key={i}
                       animate={{ rotate: [0, i % 2 === 0 ? 18 : -18, 0], y: [0, -6, 0] }}
-                      transition={{
-                        duration: 2.5 + i * 0.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: i * 0.5,
-                      }}
+                      transition={{ duration: 2.5 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
                     >
                       {leaf}
                     </motion.span>
@@ -486,6 +573,7 @@ export default function App() {
                 </div>
               </motion.div>
             </footer>
+
           </motion.div>
         )}
       </AnimatePresence>

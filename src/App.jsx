@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import styles from './App.module.css'
 
-const EVENT = new Date('2026-07-11T16:30:00')
+const EVENT = new Date('2026-07-11T15:30:00')
 
 const ANIMALS = [
   { emoji: '🦁', name: 'León' },
@@ -41,8 +41,8 @@ const INFO = [
   {
     icon: '🕒',
     label: 'Hora',
-    value: '4:30 de la tarde',
-    sub: 'Las puertas abren a las 4:00 pm',
+    value: '3:30 de la tarde',
+    sub: 'Las puertas abren a las 3:00 pm',
   },
   {
     icon: '📍',
@@ -370,7 +370,7 @@ export default function App() {
                 </motion.a>
 
                 <motion.a
-                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Thiago&dates=20260711T213000Z/20260712T013000Z&details=Baby+Shower+de+Thiago+—+Sábado+11+de+julio+a+las+4:30+pm"
+                  href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baby+Shower+Thiago&dates=20260711T203000Z/20260712T003000Z&details=Baby+Shower+de+Thiago+—+Sábado+11+de+julio+a+las+3:30+pm"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.ctaSecondary}
